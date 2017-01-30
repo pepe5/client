@@ -890,12 +890,13 @@ void Folder::slotAboutToRemoveAllFiles(SyncFileItem::Direction, bool *cancel)
         return;
 
     QString msg =
-        tr("This sync would remove all the files in the sync folder '%1'.\n"
-           "This might be because the folder was silently reconfigured, or that all "
-           "the files were manually removed.\n"
-           "Are you sure you want to perform this operation?");
+        tr("You are trying to remove all the files on your local sync folder '%1'.\n"
+           "These changes will be synchronized with your server, making your files "
+           "unavailable unless restored. \n"
+           "Are you sure you want to remove all the files?");
     QMessageBox msgBox(QMessageBox::Warning, tr("Remove All Files?"),
                        msg.arg(shortGuiLocalPath()));
+    msgBox.setWindowFlags(msgBox.windowFlags() | Qt::WindowStaysOnTopHint);
     msgBox.addButton(tr("Remove all files"), QMessageBox::DestructiveRole);
     QPushButton* keepBtn = msgBox.addButton(tr("Keep files"), QMessageBox::AcceptRole);
     if (msgBox.exec() == -1) {
